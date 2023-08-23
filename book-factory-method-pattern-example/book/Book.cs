@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace book_factory_method_pattern_example.book
 {
-    public abstract class Book
+    public class Book
     {
         private String _name;
         private String _author;
 
         // Constructors
+
+        public Book(String text)
+        {
+            String[] data = text.Split('/');
+            _name = data[1];
+            _author = data[2];
+        }
 
         public Book(String name, String author)
         {
@@ -48,7 +55,7 @@ namespace book_factory_method_pattern_example.book
 
         public override string ToString()
         {
-            String desc = "";
+            String desc = "Book\n";
             desc += $"Name : {_name}\n";
             desc += $"Author : {_author}\n";
             return desc;

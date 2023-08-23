@@ -9,13 +9,31 @@ namespace book_factory_method_pattern_example.bookshelf
 {
     public class ComedyBookshelf : Bookshelf
     {
-        public ComedyBookshelf()
+        public ComedyBookshelf(List<Book> books) : base(books) { }
+
+        public ComedyBookshelf(String text) : base()
         {
-            Books.Add(new ComedyBook("name", "author"));
-            Books.Add(new ComedyBook("name", "author"));
-            Books.Add(new ComedyBook("name", "author"));
-            Books.Add(new ComedyBook("name", "author"));
-            Books.Add(new ComedyBook("name", "author"));
+            String[] data = text.Split('/');
+
+            IBookFactory bookFactory = new BookFactory();
+            for (int i = 1; i < data.Length; i += 2)
+            {
+                Books.Add(bookFactory.CreateBook("comedy", data[i], data[i + 1]));
+            }
+        }
+
+        public ComedyBookshelf() { }
+
+        // Methods
+
+        public override string ToString()
+        {
+            String desc = "Comedy Bookshelf\n=-=-=-=-=-=-=-=\n";
+            foreach (Book book in Books)
+            {
+                desc += $"{book}\n";
+            }
+            return desc;
         }
     }
 }

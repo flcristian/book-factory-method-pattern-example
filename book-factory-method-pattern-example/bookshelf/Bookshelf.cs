@@ -7,11 +7,29 @@ using System.Threading.Tasks;
 
 namespace book_factory_method_pattern_example.bookshelf
 {
-    public abstract class Bookshelf
+    public class Bookshelf
     {
         private List<Book> _books;
 
         // Constructors
+
+        public Bookshelf(List<Book> books)
+        {
+            _books = books;
+        }
+        
+        public Bookshelf(String text)
+        {
+            _books = new List<Book>();
+
+            String[] data = text.Split('/');
+            
+            IBookFactory bookFactory = new BookFactory();
+            for(int i = 1; i < data.Length; i += 3)
+            {
+                _books.Add(bookFactory.CreateBook(data[i], data[i + 1], data[i + 2]));
+            }
+        }
 
         public Bookshelf()
         {
@@ -38,7 +56,7 @@ namespace book_factory_method_pattern_example.bookshelf
 
         public override string ToString()
         {
-            String desc = "Shelf\n=-=-=-=-=-=-=-=\n";
+            String desc = "Bookshelf\n=-=-=-=-=-=-=-=\n";
             foreach(Book book in _books)
             {
                 desc += $"{book}\n";
